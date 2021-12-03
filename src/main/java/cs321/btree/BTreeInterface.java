@@ -10,4 +10,6 @@ public interface BTreeInterface<E> {
 
     public void setRoot(TreeObject<E> root);
     public void setHeight(int height);
+
+    public void insert(E element);
 }
