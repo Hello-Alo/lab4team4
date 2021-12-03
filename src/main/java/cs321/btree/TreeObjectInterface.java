@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public interface TreeObjectInterface<E> {
     
-    public TreeObject<E> TreeObject();
-    public TreeObject<E> TreeObject(E key, int freq);
-    public TreeObject<E> TreeObject(ArrayList<E> keyList, ArrayList<Integer> freqList);
+    // these should be constructors, not return methods
+    //public TreeObject<E> TreeObject();
+    //public TreeObject<E> TreeObject(E key, int freq);
+    //public TreeObject<E> TreeObject(ArrayList<E> keyList, ArrayList<Integer> freqList);
 
     public E getKey(int index);
     public int getFreq(int index);
