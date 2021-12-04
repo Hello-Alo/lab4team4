@@ -1,9 +1,8 @@
 package cs321.btree;
 import java.util.ArrayList;
 
-public interface TreeObjectInterface<E> {
+public interface TreeObjectInterface<E extends Comparable<E>> {
     
-    // these should be constructors, not return methods
     //public TreeObject<E> TreeObject();
     //public TreeObject<E> TreeObject(E key, int freq);
     //public TreeObject<E> TreeObject(ArrayList<E> keyList, ArrayList<Integer> freqList);
@@ -18,6 +17,9 @@ public interface TreeObjectInterface<E> {
     public ArrayList<Integer> getAllFreqs();
     public ArrayList<TreeObject<E>> getAllChildren();
 
+    public void insertNewKey(int index, E element);
+    public void insertNewKey(int index, E element, int frequency);
+    
     public void setKey(int index, E key);
     public void setFreq(int index, int freq);
     public void setChild(int index, TreeObject<E> child);

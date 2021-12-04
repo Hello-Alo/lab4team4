@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox.KeySelectionManager;
 
-public class TreeObject<E> implements TreeObjectInterface<E>
+public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<E>
 {
 	private ArrayList<E> key;
 	private ArrayList<Integer> freq;
@@ -19,7 +19,7 @@ public class TreeObject<E> implements TreeObjectInterface<E>
 	public TreeObject() {
 		key = new ArrayList<E>();
 		freq = new ArrayList<Integer>();
-		parent = new TreeObject<E>();
+		parent = null;
 		child = new ArrayList<TreeObject<E>>();
 		leaf = true;
 	}
@@ -34,7 +34,7 @@ public class TreeObject<E> implements TreeObjectInterface<E>
 		this.freq = new ArrayList<Integer>();
 		this.key.add(key);
 		this.freq.add(freq);
-		parent = new TreeObject<E>();
+		parent = null;
 		child = new ArrayList<TreeObject<E>>();
 		
 		// set child key nodes to null
@@ -77,7 +77,7 @@ public class TreeObject<E> implements TreeObjectInterface<E>
 			key.add(keyList.get(i));
 			freq.add(1);
 		}
-		parent = new TreeObject<E>();
+		parent = null;
 		
 		// set child key nodes to null
 		// to allow setting child node to arbitrary index
@@ -308,5 +308,41 @@ public class TreeObject<E> implements TreeObjectInterface<E>
 		s = s + key.get(size-1) + ":" + freq.get(size-1) + "]";
 		return s;
 	}
+
+	/**
+	 * Inserts the key in key list at specified index
+	 * Inserts the frequency in frequency list at specified index
+	 * If not specified, frequency defaults to 1
+	 * @throws IndexOutOfBoundsException if index > key list size
+	 * @param index, element, frequency
+	 **/
+	public void insertNewKey(int index, E element, int frequency) {
+		if (index >= this.key.size())
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		this.key.add(index, element);
+		this.freq.add(index, frequency);
+		this.child.add(index, null);
+		this.child.add(index+1, null);
+	}
 	
+	/**
+	 * Inserts the key in key list at specified index
+	 * Inserts the frequency in frequency list at specified index
+	 * If not specified, frequency defaults to 1
+	 * @throws IndexOutOfBoundsException if index > key list size
+	 * @param index, element
+	 **/
+	public void insertNewKey(int index, E element) {
+		if (index >= this.key.size())
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		this.key.add(index, element);
+		// default frequency is 1
+		this.freq.add(index, 1);
+		this.child.add(index, null);
+		this.child.add(index+1, null);
+	}
 }
