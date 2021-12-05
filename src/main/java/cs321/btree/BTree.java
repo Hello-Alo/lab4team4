@@ -120,7 +120,7 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 			
 			node.insertNewKey(index, element);
 			
-			while (node.size() > 6)
+			while (node.size() > degree)
 			{
 				node = splitPromote(node);
 			}

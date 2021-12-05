@@ -2,8 +2,6 @@ package cs321.btree;
 
 import java.util.ArrayList;
 
-import javax.swing.JComboBox.KeySelectionManager;
-
 public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<E>
 {
 	private ArrayList<E> key;
@@ -21,6 +19,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		freq = new ArrayList<Integer>();
 		parent = null;
 		child = new ArrayList<TreeObject<E>>();
+		child.add(0, null);
 		leaf = true;
 	}
 
@@ -63,6 +62,9 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		}
 		int numfreq = freqList.size();
 		int numkeys = keyList.size();
+		
+		this.key = new ArrayList<E>();
+		this.freq = new ArrayList<Integer>();
 		
 		for (int i = 0; i < numfreq; i++)
 		{
@@ -182,11 +184,11 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 
 	/**
 	 * Sets the key at index in key array list
-	 * @throws IndexOutOfBoundsException if index >= key list size
+	 * @throws IndexOutOfBoundsException if index >= list size
 	 * @param index, key
 	 **/
 	public void setKey(int index, E key) {
-		if (index >= this.key.size())
+		if (index >= this.size())
 		{
 			throw new IndexOutOfBoundsException();
 		}
@@ -195,11 +197,11 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 
 	/**
 	 * Sets the frequency at index in frequency array list
-	 * @throws IndexOutOfBoundsException if index >= frequency list size
+	 * @throws IndexOutOfBoundsException if index >= list size
 	 * @param index, freq
 	 **/
 	public void setFreq(int index, int freq) {
-		if (index >= this.freq.size())
+		if (index >= this.size())
 		{
 			throw new IndexOutOfBoundsException();
 		}
@@ -263,11 +265,11 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	/**
 	 * Increments the frequency of the specified index
 	 * in frequency list by one
-	 * @throws IndexOutOfBoundsException if index >= frequency list size
+	 * @throws IndexOutOfBoundsException if index >= list size
 	 * @param index
 	 **/
 	public void incrementFreq(int index) {
-		if (index >= this.freq.size())
+		if (index >= this.size())
 		{
 			throw new IndexOutOfBoundsException();
 		}
@@ -291,6 +293,8 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		}
 		return eq;
 	}
+	
+	
 
 	/**
 	 * Returns the string representation of the Tree Node
@@ -313,29 +317,29 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	 * Inserts the key in key list at specified index
 	 * Inserts the frequency in frequency list at specified index
 	 * If not specified, frequency defaults to 1
-	 * @throws IndexOutOfBoundsException if index > key list size
+	 * @throws IndexOutOfBoundsException if index > list size
 	 * @param index, element, frequency
 	 **/
 	public void insertNewKey(int index, E element, int frequency) {
-		if (index >= this.key.size())
+		if (index > size())
 		{
 			throw new IndexOutOfBoundsException();
 		}
 		this.key.add(index, element);
 		this.freq.add(index, frequency);
 		this.child.add(index, null);
-		this.child.add(index+1, null);
+		//this.child.add(index+1, null);
 	}
 	
 	/**
 	 * Inserts the key in key list at specified index
 	 * Inserts the frequency in frequency list at specified index
 	 * If not specified, frequency defaults to 1
-	 * @throws IndexOutOfBoundsException if index > key list size
+	 * @throws IndexOutOfBoundsException if index > list size
 	 * @param index, element
 	 **/
 	public void insertNewKey(int index, E element) {
-		if (index >= this.key.size())
+		if (index > size())
 		{
 			throw new IndexOutOfBoundsException();
 		}
@@ -343,7 +347,51 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		// default frequency is 1
 		this.freq.add(index, 1);
 		this.child.add(index, null);
-		this.child.add(index+1, null);
-	}	
+		//this.child.add(index+1, null);
+	}
+
+	/**
+	 * Returns true if the Node is empty
+	 * (i.e. has 0 elements)
+	 * @return true if empty, false otherwise
+	 **/
+	public boolean isEmpty() {
+		return key.size()==0;
+	}
+	
+	/**
+	 * Returns the size of the Tree Object (node)
+	 * number of keys
+	 * @return size of node
+	 **/
+	public int size()
+	{
+		return this.getAllKeys().size();
+	}
+	
+	/**
+	 * Splits a tree object node from start to end position
+	 * @throws IndexOutOfBoundsException if either start
+	 * or end position is out of bounds < 0 or > size
+	 * @return A sub node of the original Tree Node
+	 **/
+	public TreeObject<E> getSubNode(int start, int end)
+	{
+		if (start < 0 || end > size() || start > end)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		
+		TreeObject<E> sub = new TreeObject();
+		ArrayList<TreeObject<E>> children = new ArrayList<TreeObject<E>>();
+		for (int i = start; i < end; i++)
+		{
+			sub.insertNewKey(i-start, getKey(i), getFreq(i));
+			children.add(this.getChild(i));
+		}
+		children.add(this.getChild(end));
+		sub.setAllChildren(children);
+		return sub;
+	}
 	
 }

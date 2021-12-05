@@ -1,5 +1,7 @@
 package cs321.btree;
 
+import java.util.ArrayList;
+
 public interface BTreeInterface<E extends Comparable<E>> {
     
     //public BTree<E> BTree();
@@ -8,7 +10,7 @@ public interface BTreeInterface<E extends Comparable<E>> {
     public TreeObject<E> getRoot();
     public int getHeight();
     public int getDegree();
-    public int[] contains();
+    public ArrayList<Integer> contains(E element);
 
     public void setRoot(TreeObject<E> root);
     public void setHeight(int height);
