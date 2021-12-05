@@ -34,15 +34,44 @@ public class SequenceUtilsTest
         Long targetLong = Long.valueOf(255);
         String testString = "tttt";
 
-        assertEquals(targetLong, (SequenceUtils.StringToLong(testString, 4)));
+        assertEquals(targetLong, (SequenceUtils.StringToLong(testString)));
     }
 
     @Test
-    public void testLongToString() throws Exception
+    public void testLongToString1() throws Exception
     {
-        String targetString = "tttt";
-        long testLong = 255;   
+        String targetString = "aaaa";
+        long testLong = 0;   
 
         assertEquals(targetString, (SequenceUtils.LongToString(testLong, 4)));
+    }
+
+    
+    @Test
+    public void testLongToString2() throws Exception
+    {
+        String targetString = "aaat";
+        long testLong = 3;   
+
+        assertEquals(targetString, (SequenceUtils.LongToString(testLong, 4)));
+    }
+
+    
+    @Test
+    public void testLongToString3() throws Exception
+    {
+        String targetString = "actt";
+        long testLong = 31;   
+
+        assertEquals(targetString, (SequenceUtils.LongToString(testLong, 4)));
+    }
+    
+    @Test
+    public void testLongToString4() throws Exception
+    {
+        String targetString = "tgcact";
+        long testLong = 3655;   
+
+        assertEquals(targetString, (SequenceUtils.LongToString(testLong, 6)));
     }
 }
