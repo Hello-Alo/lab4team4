@@ -8,6 +8,7 @@ public interface BTreeInterface<E extends Comparable<E>> {
     public TreeObject<E> getRoot();
     public int getHeight();
     public int getDegree();
+    public int[] contains();
 
     public void setRoot(TreeObject<E> root);
     public void setHeight(int height);

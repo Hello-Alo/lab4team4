@@ -344,5 +344,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		this.freq.add(index, 1);
 		this.child.add(index, null);
 		this.child.add(index+1, null);
-	}
+	}	
+	
 }
