@@ -28,5 +28,21 @@ public class SequenceUtilsTest
     //HINT: you can (manually) identify a few sequences in the other genome files
     //      and verify that the actualListOfDNASequences contains the identified sequences
 
+    @Test
+    public void testStringToLong() throws Exception
+    {
+        Long targetLong = Long.valueOf(255);
+        String testString = "tttt";
 
+        assertEquals(targetLong, (SequenceUtils.StringToLong(testString, 4)));
+    }
+
+    @Test
+    public void testLongToString() throws Exception
+    {
+        String targetString = "tttt";
+        long testLong = 255;   
+
+        assertEquals(targetString, (SequenceUtils.LongToString(testLong, 4)));
+    }
 }
