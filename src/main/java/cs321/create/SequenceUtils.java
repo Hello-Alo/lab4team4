@@ -73,10 +73,10 @@ public class SequenceUtils
      * @param stringDNA a string DNA sequence consisting only of the characters a, t, c, and g
      * @return longDNA a long int equivalent to the given string sequence of DNA
      */
-    public static Long StringToLong (String stringDNA) {
+    public static long StringToLong (String stringDNA) {
         //binDNA instantiated as "00" to exclude the signed bit
         String binDNA = "00";
-        char[] charArrayDNA = stringDNA.toCharArray();
+        char[] charArrayDNA = stringDNA.toLowerCase().toCharArray();
         
         //right-justify the binary string
         for (int i = 0; i < MAX_SEQ_LEN - stringDNA.length(); i++){

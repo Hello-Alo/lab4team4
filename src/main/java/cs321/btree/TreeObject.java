@@ -207,9 +207,9 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	 * @param index, key
 	 **/
 	public void setKey(int index, E key) {
-		if (index >= this.size())
+		if (index >= this.key.size())
 		{
-			throw new IndexOutOfBoundsException();
+			this.key.add(index, key);
 		}
 		this.key.set(index, key);
 	}
@@ -220,9 +220,9 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	 * @param index, freq
 	 **/
 	public void setFreq(int index, int freq) {
-		if (index >= this.size())
+		if (index >= this.freq.size())
 		{
-			throw new IndexOutOfBoundsException();
+			this.freq.add(index, freq);
 		}
 		this.freq.set(index, freq);
 	}
@@ -235,7 +235,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	public void setChildLineNum(int index, int lineNum) {
 		if (index >= this.childLineNum.size())
 		{
-			throw new IndexOutOfBoundsException();
+			this.childLineNum.add(index, lineNum);
 		}
 		this.childLineNum.set(index, lineNum);
 	}

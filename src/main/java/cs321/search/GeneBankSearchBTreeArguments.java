@@ -9,7 +9,7 @@ public class GeneBankSearchBTreeArguments
 
     public static boolean checkNumArguments(String[] args) throws ParseArgumentException{
         if (args.length > 5 || args.length < 3)
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("Check num Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
         
         return true;
     }
@@ -21,7 +21,7 @@ public class GeneBankSearchBTreeArguments
             else if (Integer.parseInt(args[0]) == 0)
                 return false;
         } catch (NumberFormatException e) {
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("Cache yes/no Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
        }
        return false;
     }
@@ -32,12 +32,18 @@ public class GeneBankSearchBTreeArguments
             if (Integer.parseInt(args[0]) == 1){
                 i = Integer.valueOf(Integer.parseInt(args[5]));
                 return i;
-            } else {
+            } else if (args.length == 4) {
                 i = Integer.valueOf(Integer.parseInt(args[4]));       
                 return i;         
+            } else{
+                i = 0;
+                return i;
             }
         } catch (NumberFormatException e) {
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("Debug level Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+        } catch (IndexOutOfBoundsException e) {
+            i = 0; 
+            return i;
         }
     }
 
@@ -47,7 +53,7 @@ public class GeneBankSearchBTreeArguments
             i = Integer.valueOf(Integer.parseInt(args[4]));
             return i;
         } catch (NumberFormatException e) {
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("Cache size Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
         }
     }
 
@@ -58,7 +64,7 @@ public class GeneBankSearchBTreeArguments
                 throw new FileNotFoundException();
                 return args[1];
         } catch (FileNotFoundException e) {
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("open btree Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
         }
     }
 
@@ -69,7 +75,7 @@ public class GeneBankSearchBTreeArguments
                 throw new FileNotFoundException();
                 return args[2];
         } catch (FileNotFoundException e) {
-            throw new ParseArgumentException("Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+            throw new ParseArgumentException("open query Usage: java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
         }
     }
 }
