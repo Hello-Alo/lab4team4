@@ -93,6 +93,7 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 			int index = 0;
 			while (!node.isLeaf())
 			{
+				index = 0;
 				int psize = node.size();
 				while (index < psize && 
 						element.compareTo(node.getKey(index)) > 0)
