@@ -31,7 +31,7 @@ public class SequenceUtilsTest
     @Test
     public void testStringToLong() throws Exception
     {
-        Long targetLong = Long.valueOf(255);
+        long targetLong = 255;
         String testString = "tttt";
 
         assertEquals(targetLong, (SequenceUtils.StringToLong(testString)));

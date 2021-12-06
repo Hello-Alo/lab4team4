@@ -41,7 +41,7 @@ public class GeneBankSearchBTree
             btreeFile = GeneBankSearchBTreeArguments.openBTreeFile(args);
             queryFile = GeneBankSearchBTreeArguments.openQueryFile(args);
         } catch (ParseArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.toString());
             System.exit(1);
         }
 
@@ -60,20 +60,20 @@ public class GeneBankSearchBTree
     public static int Search(long seq, TreeObject<Long> node, String btreeFile) {
         int i;
         //System.out.println(node.toString());
-        if (seq < node.getKey(0).longValue())
+        if (seq < node.getKey(0).longValue() && node.getChildLineNum(0) != -1 )
             return Search(seq, parseNode(btreeFile, node.getChildLineNum(0)), btreeFile);
         for (i = 0; i+1 < node.getAllKeys().size(); i++){
             if (seq == node.getKey(i).longValue()) 
                 return node.getFreq(i); 
-            if (seq > node.getKey(i).longValue() && seq < node.getKey(i+1).longValue())
+            if (seq > node.getKey(i).longValue() && seq < node.getKey(i+1).longValue() && node.getChildLineNum(i+1) != -1)
                 return Search(seq, parseNode(btreeFile, node.getChildLineNum(i+1)), btreeFile);
             } 
         if (seq == node.getKey(i).longValue()) 
                 return node.getFreq(i);
-        if (seq > node.getKey(i).longValue())
+        if (seq > node.getKey(i).longValue() && node.getChildLineNum(i) != -1)
             return Search(seq, parseNode(btreeFile, node.getChildLineNum(i+1)), btreeFile);   
 
-        return -1;
+        return 0;
     }
 
     public static TreeObject<Long> parseNode(String btreeFile, int index){
@@ -95,8 +95,8 @@ public class GeneBankSearchBTree
 
         int keyPos = 0;
         for (int i = 0; i < strArray.length; i++){
+            strArray[i] = strArray[i].stripLeading();
             if (strArray[i].contains(":")){
-                strArray[i] = strArray[i].substring(1,strArray[i].length() - 1);
                 smallArray = strArray[i].split(":");
                 node.setKey(keyPos, Long.parseLong(smallArray[0]));
                 node.setFreq(keyPos,Integer.parseInt(smallArray[1]));

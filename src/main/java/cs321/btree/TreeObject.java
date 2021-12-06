@@ -137,7 +137,8 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	public int getChildLineNum(int index) {
 		if (index >= childLineNum.size())
 		{
-			throw new IndexOutOfBoundsException();
+			return -1;
+			//throw new IndexOutOfBoundsException();
 		}
 		return childLineNum.get(index);
 	}

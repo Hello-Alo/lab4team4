@@ -263,7 +263,7 @@ public class BTreeToFile {
 				TreeObject curr = tQueue.get(0);
 				parentRef = curr.getParent();
 				// append string to file formatted string
-				ArrayList<String> strarr = addChildLineNum(curr.toString(), linenum);
+				ArrayList<String> strarr = addChildLineNum(curr.toString(), linenum, curr);
 				s = s + parentRef.getLineNum() + strarr.toString() + "\n";
 				
 				// update the queue and line number
@@ -292,7 +292,7 @@ public class BTreeToFile {
 	 * @returns the new Tree Object format string with child
 	 * line numbers included
 	 **/
-	public ArrayList<String> addChildLineNum(String format, int line)
+	public ArrayList<String> addChildLineNum(String format, int line, TreeObject node)
 	{
 		ArrayList<String> strarr = new ArrayList<String>();
 		if (format!=null && format.length()>2)
@@ -303,8 +303,10 @@ public class BTreeToFile {
 			int length = strarr.size();
 			for (int i = 0; i < length+1; i++)
 			{
-				strarr.add(2*i, line + "");
-				line++;
+				if(node.getChild(i) != null){
+					strarr.add(2*i, line + "");
+					line++;
+				}
 			}
 		}
 		return strarr;

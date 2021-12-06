@@ -1,6 +1,7 @@
 package cs321.create;
 
 import cs321.btree.BTree;
+import cs321.btree.BTreeToFile;
 import cs321.common.ParseArgumentException;
 
 import java.io.*;
@@ -12,8 +13,10 @@ public class GeneBankCreateBTree
     public static void main(String[] args) throws Exception
     {
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
-        GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
-
+        //GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
+        BTreeToFile br = new BTreeToFile("./data/files_gbk/input.txt", 0);
+        br.CreateBTree();
+        br.WriteBTreeToFile("./data/files_gbk/output.txt");
 
     }
 
