@@ -57,8 +57,16 @@ public class GeneBankSearchBTree
 
     }
 
+    /**
+     * Search out a particular gene sequence in a btree, fed in as a long int and specially formatted txt file
+     * @param seq the gene sequence to be searched for, as a long
+     * @param node the node that is to be searched
+     * @param btreeFile the file that the node originates from
+     * @return freq the frequency the gene sequence is found in the gene file the btree was constructed from.
+     */
     public static int Search(long seq, TreeObject<Long> node, String btreeFile) {
         int i;
+        //Un-comment the below line to show tree-traversal
         //System.out.println(node.toString());
         if (seq < node.getKey(0).longValue() && node.getChildLineNum(0) != -1 )
             return Search(seq, parseNode(btreeFile, node.getChildLineNum(0)), btreeFile);
@@ -75,7 +83,12 @@ public class GeneBankSearchBTree
 
         return 0;
     }
-
+    /**
+     * Create a TreeObject from a line in a .btree file
+     * @param btreeFile the .btree file from which to create the node
+     * @param index the line # of the node
+     * @return node a TreeObject for use in the Search method above.
+     */
     public static TreeObject<Long> parseNode(String btreeFile, int index){
         TreeObject<Long> node = new TreeObject<Long>();
         String str = new String();
@@ -90,12 +103,12 @@ public class GeneBankSearchBTree
         } finally {
             node.setParent(null);     
         }
+        str = str.replace(" ", "");
         str = str.substring(str.indexOf("[") + 1, str.indexOf("]"));
         strArray = str.split(",");
 
         int keyPos = 0;
         for (int i = 0; i < strArray.length; i++){
-            strArray[i] = strArray[i].stripLeading();
             if (strArray[i].contains(":")){
                 smallArray = strArray[i].split(":");
                 node.setKey(keyPos, Long.parseLong(smallArray[0]));

@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import cs321.create.GeneBankCreateBTreeArguments;
+import cs321.create.SequenceUtils;
+
+
 /**
  * Reads and writes B Trees to files
  * Comparable elements are Integers (or Longs)
  **/
 public class BTreeToFile {
-	private File f;
-	private ArrayList<Integer> arrayInts;
-	private ArrayList<Long> arrayLongs;
-	private BTree<Integer> bInt;
+	private GeneBankCreateBTreeArguments geneBankArgs;
 	private BTree<Long> bLong;
-	private int type;
 	
 	/**
 	 * Reads comma-separated values from a file and 
@@ -26,184 +26,77 @@ public class BTreeToFile {
 	 * type = 0 for 32-bit int
 	 * type = 1 for 64-bit int (long)
 	 **/
-	public BTreeToFile(String filename, int type) throws FileNotFoundException
+	public BTreeToFile(GeneBankCreateBTreeArguments geneBankArgs) throws FileNotFoundException
 	{
-		this.type = type;
-	    try {
-	    	String data = "";
-	    	f = new File(filename);
-	        Scanner s = new Scanner(f);
-	        while (s.hasNextLine()) {
-	        	// read data in file
-	        	// line by line
-	          data = data + s.nextLine();
-	        }
-	        if (type==0)
-	        {
-	        	arrayInts = DataToInteger(data);
-	        	bInt = new BTree<Integer>();
-	        }
-	        else
-	        {
-	        	arrayLongs = DataToLong(data);
-	        	bLong = new BTree<Long>();
-	        }
-	        s.close();
-	      }
-	    catch (FileNotFoundException e) {
-	        System.out.println("Could not open file.");
-	        e.printStackTrace();
-	      }
-	}
-	
-	/**
-	 * Returns underlying array list for B Tree File
-	 * @return array list for B Tree File
-	 **/
-	public ArrayList getArrayList()
-	{
-		if (type==0)
-		{
-			return arrayInts;
-		}
-		else
-		{
-			return arrayLongs;
-		}
-	}
-	
-	/**
-	 * Sets underlying array list for B Tree File
-	 * @param array list
-	 **/
-	public void setArrayList(ArrayList a)
-	{
-		if (type==0)
-		{
-			arrayInts = a;
-		}
-		else
-		{
-			arrayLongs = a;
-		}
+			this.geneBankArgs = geneBankArgs;
+			bLong = CreateBTree( this.geneBankArgs);
+	      
 	}
 	
 	/**
 	 * Returns underlying B Tree for B Tree File
 	 * @return B Tree structure
 	 **/
-	public BTree getBTree()
+	public BTree<Long> getBTree()
 	{
-		if (type==0)
-		{
-			return bInt;
-		}
-		else
-		{
 			return bLong;
-		}
 	}
 	
 	/**
 	 * Sets underlying B Tree for B Tree File
 	 * @param B Tree structure
 	 **/
-	public void setBTree(BTree b)
+	public void setBTree(BTree<Long> b)
 	{
-		if (type==0)
-		{
-			bInt = b;
-		}
-		else
-		{
 			bLong = b;
-		}
 	}
-	
+
 	/**
-	 * Creates a BTree using Array List
-	 * (either Integer or Long depending on
-	 * mode initialized in constructor)
-	 **/
-	public void CreateBTree()
-	{
-		// construct a new BTree using values
-		// in ArrayList
-		if (type==0)
-		{
-			bInt = new BTree<Integer>();
-			for (int i = 0; i < arrayInts.size(); i++)
-			{
-				bInt.insert(arrayInts.get(i));
-			}
-		}
-		else
-		{
-			bLong = new BTree<Long>();
-			for (int i = 0; i < arrayLongs.size(); i++)
-			{
-				bLong.insert(arrayLongs.get(i));
-			}
-		}
-	}
-	
-	
-	/**
-	 * Converts a comma separated value string
-	 * into an Array List of Integers
-	 * @param data
-	 * @throws NumberFormatException if 
-	 * String parameter is not an integer
-	 * @returns an Integer Array List containing data from string
-	 **/
-	public ArrayList<Integer> DataToInteger(String data)
-	{
-		// format string to csv (without whitespace)
-		data = data.replaceAll("\\s+","");
-		ArrayList<String> strInt = new ArrayList<String>(Arrays.asList(data.split(",")));
-		ArrayList<Integer> dataInt = new ArrayList<Integer>();
-		try 
-		{
-			for (int i = 0; i < strInt.size(); i++)
-			{
-				dataInt.add(Integer.parseInt(strInt.get(i)));
-			}
-		}
-		catch (NumberFormatException e)
-		{
-	        System.out.println("List Must be integers.");
-	        e.printStackTrace();
-		}
-		return dataInt;
-	}
-	
-	/**
-	 * Converts a comma separated value string
-	 * into an Array List of Longs
-	 * @param data
+	 * Converts a gbk file into a BTree of longs
+	 * @param geneBankArgs
 	 * @throws NumberFormatException if 
 	 * String parameter is not a (long) integer
-	 * @returns a Long Array List containing data from string
+	 * @returns btree a BTree containing data from the argued gbk file
 	 **/
-	public ArrayList<Long> DataToLong(String data)
+	public BTree<Long> CreateBTree(GeneBankCreateBTreeArguments geneBankArgs)
 	{
-		// format string to csv (without whitespace)
-		data = data.replaceAll("\\s+","");
-		ArrayList<String> strLong = new ArrayList<String>(Arrays.asList(data.split(",")));
-		ArrayList<Long> dataLong = new ArrayList<Long>();
-		try 
-		{
-			for (int i = 0; i < strLong.size(); i++)
-			{
-				dataLong.add(Long.parseLong(strLong.get(i)));
+		Scanner scan = new Scanner("");
+		try{
+			scan = new Scanner(new File(geneBankArgs.gbkFileName()));
+		} catch (FileNotFoundException e){
+			System.out.printf("Something went very wrong.\n" + e.toString());
+			System.exit(1);
+		}
+		String str = "";
+		String line = "";
+		while (!line.equals("ORIGIN")) {
+			line = scan.nextLine().stripTrailing();
+		}
+		line =  scan.nextLine();
+		line = line.replace(" ", "");
+		line = line.substring(11);
+
+		for (int i = 0; i < geneBankArgs.subsequenceLength(); i++){
+			str += line.charAt(i);
+		}
+
+		BTree<Long> btree = new BTree<Long>();
+		btree.setDegree(geneBankArgs.degree());
+
+		btree.insert(SequenceUtils.StringToLong(str));
+		while (!line.equals("//")) {
+			for (int i = 0; i < line.length(); i++){
+				str = str.substring(1);
+				str += line.charAt(i);
+				btree.insert(SequenceUtils.StringToLong(str));
 			}
-		}
-		catch (NumberFormatException e)
-		{
-	        System.out.println("List Must be (long) integers.");
-	        e.printStackTrace();
-		}
-		return dataLong;
+			line =  scan.nextLine();
+			line = line.replace(" ", "");
+			if (line.length() >= 11)
+				line = line.substring(11);
+		} 
+		scan.close();
+		return btree;
 	}
 	
 	/**
@@ -214,22 +107,32 @@ public class BTreeToFile {
 	{
 	    try {
 	        FileWriter bTreeFile = new FileWriter(outFilename);
-	        CreateBTree();
-	        if (type==0)
-	        {
-	        	TreeObject<Integer> currNode = bInt.getRoot();
-	        	bTreeFile.write(bInt.getDegree() + "");
-	        	bTreeFile.write("\n");
-	        	bTreeFile.write(BTreeOutputFormat(bInt.getRoot()));
-	        }
-	        else
-	        {
-	        	TreeObject<Long> currNode = bLong.getRoot();
-	        	bTreeFile.write(bLong.getDegree() + "");
-	        	bTreeFile.write("\n");
-	        	bTreeFile.write(BTreeOutputFormat(bLong.getRoot()));
-	        }
+	        CreateBTree(geneBankArgs);
+
+			TreeObject<Long> currNode = bLong.getRoot();
+			bTreeFile.write(bLong.getDegree() + "");
+			bTreeFile.write("\n");
+			bTreeFile.write(BTreeOutputFormat(bLong.getRoot()));
 	        bTreeFile.close();
+
+	      } catch (IOException e) {
+	        System.out.println("An error occurred when writing to file.");
+	        e.printStackTrace();
+	      }
+	}
+
+	public void WriteBTreeDumpToFile(String outFilename)
+	{
+	    try {
+	        FileWriter bTreeDumpFile = new FileWriter(outFilename);
+	        CreateBTree(geneBankArgs);
+
+			TreeObject<Long> currNode = bLong.getRoot();
+			bTreeDumpFile.write(bLong.getDegree() + "");
+			bTreeDumpFile.write("\n");
+			bTreeDumpFile.write(BTreeDumpFormat(bLong.getRoot()));
+	        bTreeDumpFile.close();
+
 	      } catch (IOException e) {
 	        System.out.println("An error occurred when writing to file.");
 	        e.printStackTrace();
@@ -243,15 +146,15 @@ public class BTreeToFile {
 	 * @param t, ref, lineno
 	 * @returns String containing output format for Tree Object
 	 **/
-	public String BTreeOutputFormat(TreeObject t)
+	public String BTreeOutputFormat(TreeObject<Long> t)
 	{
 		String s = "";
 		if (t!=null && !t.isEmpty())
 		{
 			int linenum = 2;
 			int ref = 0;
-			TreeObject parentRef = new TreeObject();
-			ArrayList<TreeObject> tQueue = new ArrayList<TreeObject>();
+			TreeObject<Long> parentRef = new TreeObject<Long>();
+			ArrayList<TreeObject<Long>> tQueue = new ArrayList<TreeObject<Long>>();
 			if (t.getParent()==null)
 			{
 				t.setParent(parentRef);
@@ -260,7 +163,7 @@ public class BTreeToFile {
 			tQueue.add(t);
 			while (!tQueue.isEmpty())
 			{
-				TreeObject curr = tQueue.get(0);
+				TreeObject<Long> curr = tQueue.get(0);
 				parentRef = curr.getParent();
 				// append string to file formatted string
 				ArrayList<String> strarr = addChildLineNum(curr.toString(), linenum, curr);
@@ -272,7 +175,7 @@ public class BTreeToFile {
 				
 				if (!curr.isLeaf())
 				{
-					ArrayList<TreeObject> currChild = curr.getAllChildren();
+					ArrayList<TreeObject<Long>> currChild = curr.getAllChildren();
 					for (int i = 0; i < currChild.size(); i++)
 					{
 						currChild.get(i).setParent(curr);
@@ -284,6 +187,32 @@ public class BTreeToFile {
 		}
 		return s;
 	}
+
+	public String BTreeDumpFormat (TreeObject<Long> t) {
+		String str = "";
+		if(t.isLeaf()){
+			for(int i = 0; i<t.getAllKeys().size(); i++){
+				str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
+				str = str.concat(String.format(": %d\n", t.getFreq(i)));
+			}
+		} else {
+			int i;
+			for (i = 0; i<t.getAllKeys().size(); i++){
+				if(t.hasChild(i)){
+					str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
+					str = str.concat(String.format(": %d\n", t.getFreq(i)));
+				} else {
+					str = BTreeDumpFormat(t.getChild(i)).concat(str);
+					str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
+					str = str.concat(String.format(": %d\n", t.getFreq(i)));
+				}
+			}
+			if (t.hasChild(i)){
+				str = BTreeDumpFormat(t.getChild(i)).concat(str);
+			}
+		}
+		return str;
+	}
 	
 	/**
 	 * Appends the child line numbers inside an existing string
@@ -292,13 +221,13 @@ public class BTreeToFile {
 	 * @returns the new Tree Object format string with child
 	 * line numbers included
 	 **/
-	public ArrayList<String> addChildLineNum(String format, int line, TreeObject node)
+	public ArrayList<String> addChildLineNum(String format, int line, TreeObject<Long> node)
 	{
 		ArrayList<String> strarr = new ArrayList<String>();
 		if (format!=null && format.length()>2)
 		{
 			format = format.substring(1,format.length()-1);
-			format = format.replaceAll("\\s+","");
+			format = format.replaceAll(" ","");
 			strarr = new ArrayList<String>(Arrays.asList(format.split(",")));
 			int length = strarr.size();
 			for (int i = 0; i < length+1; i++)

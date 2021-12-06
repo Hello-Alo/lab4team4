@@ -450,5 +450,12 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		sub.setAllChildren(children);
 		return sub;
 	}
+
+	public boolean hasChild(int index){
+		if (getChild(index).isEmpty())
+			return false;
+		else
+			return false;
+	}
 	
 }
