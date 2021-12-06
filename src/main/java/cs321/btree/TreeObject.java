@@ -7,6 +7,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	private ArrayList<E> key;
 	private ArrayList<Integer> freq;
 	private ArrayList<TreeObject<E>> child;
+	private ArrayList<Integer> childLineNum;
 	private TreeObject<E> parent;
 	private boolean leaf;
 
@@ -18,6 +19,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		key = new ArrayList<E>();
 		freq = new ArrayList<Integer>();
 		parent = null;
+		childLineNum = new ArrayList<Integer>();
 		child = new ArrayList<TreeObject<E>>();
 		child.add(0, null);
 		leaf = true;
@@ -34,6 +36,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		this.key.add(key);
 		this.freq.add(freq);
 		parent = null;
+		childLineNum = new ArrayList<Integer>();
 		child = new ArrayList<TreeObject<E>>();
 		
 		// set child key nodes to null
@@ -84,6 +87,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		// set child key nodes to null
 		// to allow setting child node to arbitrary index
 		// instead of starting from 0
+		childLineNum = new ArrayList<Integer>();
 		child = new ArrayList<TreeObject<E>>();
 		for (int i = 0; i < numkeys+1; i++)
 		{
@@ -119,6 +123,21 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		}
 		return freq.get(index);
 	}
+
+	/**
+	 * Finds the child's line number in file at specified index in the child array list 
+	 * @param index
+	 * @throws IndexOutOfBoundsException if index >= child list size;
+	 * @returns Child Line Number at index
+	 **/
+	public int getChildLineNum(int index) {
+		if (index >= childLineNum.size())
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		return childLineNum.get(index);
+	}
+	
 
 	/**
 	 * Finds the child node at specified index in the child array list 
@@ -206,6 +225,19 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 			throw new IndexOutOfBoundsException();
 		}
 		this.freq.set(index, freq);
+	}
+
+	/**
+	 * Sets the child at index in child array list
+	 * @throws IndexOutOfBoundsException if index >= child list size
+	 * @param index, child
+	 **/
+	public void setChildLineNum(int index, int lineNum) {
+		if (index >= this.childLineNum.size())
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		this.childLineNum.set(index, lineNum);
 	}
 
 	/**
