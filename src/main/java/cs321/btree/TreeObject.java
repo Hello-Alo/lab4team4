@@ -10,6 +10,8 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	private ArrayList<Integer> childLineNum;
 	private TreeObject<E> parent;
 	private boolean leaf;
+	// used for writing to files
+	private int lineNum;
 
 	/**
 	 * Creates a new Tree Object with
@@ -23,6 +25,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		child = new ArrayList<TreeObject<E>>();
 		child.add(0, null);
 		leaf = true;
+		lineNum = 0;
 	}
 
 	/**
@@ -38,7 +41,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		parent = null;
 		childLineNum = new ArrayList<Integer>();
 		child = new ArrayList<TreeObject<E>>();
-		
+		lineNum = 0;
 		// set child key nodes to null
 		// to allow setting child node to arbitrary index
 		// instead of starting from 0
@@ -94,6 +97,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 			child.add(null);
 		}
 		leaf = true;
+		lineNum = 0;
 	}
 
 	/**
@@ -399,6 +403,26 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	public int size()
 	{
 		return this.getAllKeys().size();
+	}
+	
+	/**
+	 * Returns the current line number of node
+	 * in File Output Format
+	 * @return line number
+	 **/
+	public int getLineNum()
+	{
+		return lineNum;
+	}
+	
+	/**
+	 * Sets the current line number of node
+	 * in File Output Format
+	 * @param line
+	 **/
+	public void setLineNum(int line)
+	{
+		lineNum = line;
 	}
 	
 	/**
