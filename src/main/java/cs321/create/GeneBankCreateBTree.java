@@ -12,31 +12,46 @@ public class GeneBankCreateBTree
 
     public static void main(String[] args) throws Exception
     {
-        System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
-        //GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
-        BTreeToFile br = new BTreeToFile("./data/files_gbk/input.txt", 0);
-        br.CreateBTree();
-        br.WriteBTreeToFile("./data/files_gbk/output.txt");
+        GeneBankCreateBTreeArguments geneBankArgs = parseArgumentsAndHandleExceptions(args);
+        BTreeToFile br = new BTreeToFile(geneBankArgs);
+
+        String btreeFilename = String.format("%s.btree.%d.%d", 
+                                                geneBankArgs.gbkFileName(),
+                                                geneBankArgs.degree(),
+                                                geneBankArgs.subsequenceLength());
+        br.WriteBTreeToFile(btreeFilename);
+
+        if(geneBankArgs.debugLevel() == 1) {
+            String btreeDumpFilename = String.format("%s.btree.dump.%d.%d", 
+                                                        geneBankArgs.gbkFileName(), 
+                                                        geneBankArgs.degree(),
+                                                        geneBankArgs.subsequenceLength());
+            br.WriteBTreeDumpToFile(btreeDumpFilename);
+        }
+
 
     }
 
     private static GeneBankCreateBTreeArguments parseArgumentsAndHandleExceptions(String[] args)
     {
-        GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = null;
+        GeneBankCreateBTreeArguments geneBankArgs = null;
         try
         {
-            geneBankCreateBTreeArguments = parseArguments(args);
+            geneBankArgs = GeneBankCreateBTreeArguments.parseArguments(args);
         }
         catch (ParseArgumentException e)
         {
             printUsageAndExit(e.getMessage());
         }
-        return geneBankCreateBTreeArguments;
+        return geneBankArgs;
     }
 
     private static void printUsageAndExit(String errorMessage)
     {
 
+        System.out.println(errorMessage);
+        System.out.println("Usage: java GeneBankCreateBTree <0/1(no/with Cache)> <degree> <gbk file> <sequence length> "
+       + "[<cache size>] [<debug level>]");
         System.exit(1);
     }
 
