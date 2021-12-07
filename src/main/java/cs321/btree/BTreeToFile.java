@@ -128,8 +128,8 @@ public class BTreeToFile {
 	        CreateBTree(geneBankArgs);
 
 			TreeObject<Long> currNode = bLong.getRoot();
-			bTreeDumpFile.write(bLong.getDegree() + "");
-			bTreeDumpFile.write("\n");
+			//bTreeDumpFile.write(bLong.getDegree() + "");
+			//bTreeDumpFile.write("\n");
 			bTreeDumpFile.write(BTreeDumpFormat(bLong.getRoot()));
 	        bTreeDumpFile.close();
 

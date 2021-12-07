@@ -9,6 +9,7 @@ import cs321.create.SequenceUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.FileWriter;
 import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,6 +23,7 @@ public class GeneBankSearchBTree
         boolean useCache;
         String btreeFile = "";
         String queryFile = "";
+        String outFileName = "";
         int cacheSize;
         int debugLevel;
         TreeObject<Long> rootNode;
@@ -45,16 +47,20 @@ public class GeneBankSearchBTree
             System.exit(1);
         }
 
+        outFileName = String.format("%s.%s", btreeFile, queryFile.substring(queryFile.lastIndexOf("/") + 1));
+
         rootNode = parseNode(btreeFile, 1);
         Scanner queryScan = new Scanner(new File(queryFile));
+        FileWriter searchWriter = new FileWriter(outFileName);
 
         while (queryScan.hasNextLine()){
             currentQuery = queryScan.nextLine();
             queryLong = SequenceUtils.StringToLong(currentQuery);
             freq = Search(queryLong, rootNode, btreeFile);
-            System.out.printf("%s : %d\n", currentQuery, freq);
+            searchWriter.write(String.format("%s : %d\n", currentQuery, freq));
         }
-
+        queryScan.close();
+        searchWriter.close();
     }
 
     /**

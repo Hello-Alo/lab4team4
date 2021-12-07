@@ -15,15 +15,17 @@ public class GeneBankCreateBTree
         GeneBankCreateBTreeArguments geneBankArgs = parseArgumentsAndHandleExceptions(args);
         BTreeToFile br = new BTreeToFile(geneBankArgs);
 
-        String btreeFilename = String.format("%s.btree.%d", 
+        String btreeFilename = String.format("%s.btree.%d.%d", 
                                                 geneBankArgs.gbkFileName(),
-                                                geneBankArgs.degree());
+                                                geneBankArgs.degree(),
+                                                geneBankArgs.subsequenceLength());
         br.WriteBTreeToFile(btreeFilename);
 
         if(geneBankArgs.debugLevel() == 1) {
-            String btreeDumpFilename = String.format("%s.btree.dump.%d", 
+            String btreeDumpFilename = String.format("%s.btree.dump.%d.%d", 
                                                         geneBankArgs.gbkFileName(), 
-                                                        geneBankArgs.degree());
+                                                        geneBankArgs.degree(),
+                                                        geneBankArgs.subsequenceLength());
             br.WriteBTreeDumpToFile(btreeDumpFilename);
         }
 
