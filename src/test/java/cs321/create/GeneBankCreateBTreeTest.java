@@ -1,6 +1,7 @@
 package cs321.create;
 
 import cs321.common.ParseArgumentException;
+import cs321.create.GeneBankCreateBTreeArguments;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +23,7 @@ public class GeneBankCreateBTreeTest
         args[3] = "13";
 
         expectedConfiguration = new GeneBankCreateBTreeArguments(false, 20, "fileNameGbk.gbk", 13, 0, 0);
-        actualConfiguration = GeneBankCreateBTree.parseArguments(args);
+        actualConfiguration = GeneBankCreateBTreeArguments.parseArguments(args);
         assertEquals(expectedConfiguration, actualConfiguration);
     }
 

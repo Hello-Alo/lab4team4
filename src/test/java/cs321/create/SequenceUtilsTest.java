@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class SequenceUtilsTest
 {
-    @Test
+   /* @Test
     public void readGBKFileTest0AndGenerateDNASequencesTest() throws Exception
     {
         List<String> expectedListOfDNASequences = Utils.getLinesFromFile("data/files_gbk_expected_results/test0.gbk.sequences");
@@ -24,7 +24,7 @@ public class SequenceUtilsTest
             assertEquals(expectedListOfDNASequences.get(i), actualListOfDNASequences.get(i));
         }
     }
-
+    */
     //HINT: you can (manually) identify a few sequences in the other genome files
     //      and verify that the actualListOfDNASequences contains the identified sequences
 
