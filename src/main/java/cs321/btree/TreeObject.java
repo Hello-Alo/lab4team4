@@ -455,7 +455,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		if (getChild(index).isEmpty())
 			return false;
 		else
-			return false;
+			return true;
 	}
 	
 }

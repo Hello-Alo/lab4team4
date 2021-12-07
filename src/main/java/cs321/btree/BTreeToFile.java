@@ -190,25 +190,23 @@ public class BTreeToFile {
 
 	public String BTreeDumpFormat (TreeObject<Long> t) {
 		String str = "";
+		String token = "";
 		if(t.isLeaf()){
 			for(int i = 0; i<t.getAllKeys().size(); i++){
-				str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
-				str = str.concat(String.format(": %d\n", t.getFreq(i)));
+				token = String.format("%s: %d\n", SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()), t.getFreq(i));
+				str = str.concat(token);
 			}
 		} else {
 			int i;
 			for (i = 0; i<t.getAllKeys().size(); i++){
 				if(t.hasChild(i)){
-					str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
-					str = str.concat(String.format(": %d\n", t.getFreq(i)));
-				} else {
-					str = BTreeDumpFormat(t.getChild(i)).concat(str);
-					str = str.concat(SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()));
-					str = str.concat(String.format(": %d\n", t.getFreq(i)));
-				}
+					str = str.concat(BTreeDumpFormat(t.getChild(i)));
+				} 
+				token = String.format("%s: %d\n", SequenceUtils.LongToString(t.getKey(i), geneBankArgs.subsequenceLength()), t.getFreq(i));
+				str = str.concat(token);
 			}
 			if (t.hasChild(i)){
-				str = BTreeDumpFormat(t.getChild(i)).concat(str);
+				str = str.concat(BTreeDumpFormat(t.getChild(i)));
 			}
 		}
 		return str;
