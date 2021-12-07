@@ -195,7 +195,7 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 	{
 		// should only be called if needed
 		// i.e. node is full and needs to be split
-		int median = t.size() / 2;
+		int median = degree / 2;
 		TreeObject<E> p;
 		TreeObject<E> lower = t.getSubNode(0, median);
 		TreeObject<E> upper = t.getSubNode(median+1, t.size());
