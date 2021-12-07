@@ -61,40 +61,41 @@ public class BTreeToFile {
 	public BTree<Long> CreateBTree(GeneBankCreateBTreeArguments geneBankArgs)
 	{
 		Scanner scan = new Scanner("");
+		BTree<Long> btree = new BTree<Long>();
+		btree.setDegree(geneBankArgs.degree());
 		try{
 			scan = new Scanner(new File(geneBankArgs.gbkFileName()));
 		} catch (FileNotFoundException e){
 			System.out.printf("Something went very wrong.\n" + e.toString());
 			System.exit(1);
 		}
-		String str = "";
-		String line = "";
-		while (!line.equals("ORIGIN")) {
-			line = scan.nextLine().stripTrailing();
-		}
-		line =  scan.nextLine();
-		line = line.replace(" ", "");
-		line = line.substring(11);
-
-		for (int i = 0; i < geneBankArgs.subsequenceLength(); i++){
-			str += line.charAt(i);
-		}
-
-		BTree<Long> btree = new BTree<Long>();
-		btree.setDegree(geneBankArgs.degree());
-
-		btree.insert(SequenceUtils.StringToLong(str));
-		while (!line.equals("//")) {
-			for (int i = 0; i < line.length(); i++){
-				str = str.substring(1);
-				str += line.charAt(i);
-				btree.insert(SequenceUtils.StringToLong(str));
+		while (scan.hasNextLine()){
+			String str = "";
+			String line = "";
+			while (!line.equals("ORIGIN")) {
+				line = scan.nextLine().stripTrailing();
 			}
 			line =  scan.nextLine();
 			line = line.replace(" ", "");
-			if (line.length() >= 11)
-				line = line.substring(11);
-		} 
+			line = line.substring(11);
+
+			for (int i = 0; i < geneBankArgs.subsequenceLength(); i++){
+				str += line.charAt(i);
+			}
+
+			btree.insert(SequenceUtils.StringToLong(str));
+			while (!line.equals("//")) {
+				for (int i = 0; i < line.length(); i++){
+					str = str.substring(1);
+					str += line.charAt(i);
+					btree.insert(SequenceUtils.StringToLong(str));
+				}
+				line =  scan.nextLine();
+				line = line.replace(" ", "");
+				if (line.length() >= 11)
+					line = line.substring(11);
+			} 
+		}	
 		scan.close();
 		return btree;
 	}
