@@ -25,7 +25,6 @@ public interface TreeObjectInterface<E extends Comparable<E>> {
     public void setFreq(int index, int freq);
     public void setChild(int index, TreeObject<E> child);
     public void setParent(TreeObject<E> parent);
-    public void setIsLeaf(boolean isLeaf);
 
     public void setAllKeys(ArrayList<E> keyList);
     public void setAllFreqs(ArrayList<Integer> freqList);

@@ -9,7 +9,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	private ArrayList<TreeObject<E>> child;
 	private ArrayList<Integer> childLineNum;
 	private TreeObject<E> parent;
-	private boolean leaf;
 	// used for writing to files
 	private int lineNum;
 
@@ -24,7 +23,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		childLineNum = new ArrayList<Integer>();
 		child = new ArrayList<TreeObject<E>>();
 		child.add(0, null);
-		leaf = true;
 		lineNum = 0;
 	}
 
@@ -49,7 +47,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		{
 			child.add(null);
 		}
-		leaf = true;
 	}
 
 	/**
@@ -96,7 +93,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		{
 			child.add(null);
 		}
-		leaf = true;
 		lineNum = 0;
 	}
 
@@ -181,7 +177,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 			}
 			index++;
 		}
-		leaf = isLeafNode;
 		return isLeafNode;
 	}
 
@@ -264,15 +259,6 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	 **/
 	public void setParent(TreeObject<E> parent) {
 		this.parent = parent;
-	}
-
-	/**
-	 * Sets the truth value of whether TreeObject
-	 * is a leaf node
-	 * @param isLeaf
-	 **/
-	public void setIsLeaf(boolean isLeaf) {
-		leaf = isLeaf;
 	}
 
 	/**
@@ -439,7 +425,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 			throw new IndexOutOfBoundsException();
 		}
 		
-		TreeObject<E> sub = new TreeObject();
+		TreeObject<E> sub = new TreeObject<E>();
 		ArrayList<TreeObject<E>> children = new ArrayList<TreeObject<E>>();
 		for (int i = start; i < end; i++)
 		{
