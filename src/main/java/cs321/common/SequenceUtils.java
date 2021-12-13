@@ -1,22 +1,12 @@
-package cs321.create;
+package cs321.common;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Extract DNA Sequences and Generate DNA Subsequences
  */
 public class SequenceUtils
 {
-    private static final String MARKER_START_DNA_SEQUENCE = "ORIGIN";
     private static final int MAX_SEQ_LEN = 31;
-
-    public static List<String> getDNASequencesFromGBKGenomeFile(String gbkGenomeFileName) throws Exception
-    {
-        return new ArrayList<>();
-    }
 
     /**
      * Converts a long int into a sequence of letters a, t, c, g, representing a DNA sequence

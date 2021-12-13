@@ -228,7 +228,7 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 	}
 
 	/**
-	 * Sets the child at index in child array list
+	 * Sets the line number of the child at index in child array list
 	 * @throws IndexOutOfBoundsException if index >= child list size
 	 * @param index, child
 	 **/
@@ -437,6 +437,11 @@ public class TreeObject<E extends Comparable<E>> implements TreeObjectInterface<
 		return sub;
 	}
 
+	/**
+	 * Checks if a child exists at the given index
+	 * @param index
+	 * @return true is a child exists, false if not
+	 */
 	public boolean hasChild(int index){
 		if (getChild(index).isEmpty())
 			return false;

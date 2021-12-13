@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 {
 	private TreeObject<E> root;
-	private int height;
+	//private int height;
 	private int degree; // used for inserting new elements into tree
 	// maximum number of keys in a full node.
 
@@ -15,7 +15,7 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 	 **/
 	public BTree() {
 		root = new TreeObject<E>();
-		height = 0;
+
 		degree = 2;
 	}
 
@@ -26,7 +26,7 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 	 **/
 	public BTree(TreeObject<E> root) {
 		this.root = root;
-		height = getHeight();
+
 		degree = root.getAllKeys().size();
 	}
 
@@ -58,14 +58,6 @@ public class BTree<E extends Comparable<E>> implements BTreeInterface<E>
 	 **/
 	public void setRoot(TreeObject<E> root) {
 		this.root = root;
-	}
-
-	/**
-	 * Sets the height for this B tree
-	 * @param height
-	 **/
-	public void setHeight(int height) {
-		this.height = height;
 	}
 
 	/**

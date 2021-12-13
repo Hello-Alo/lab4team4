@@ -13,7 +13,6 @@ public interface BTreeInterface<E extends Comparable<E>> {
     public ArrayList<Integer> contains(E element);
 
     public void setRoot(TreeObject<E> root);
-    public void setHeight(int height);
     public void setDegree(int deg);
 
     public void insert(E element);

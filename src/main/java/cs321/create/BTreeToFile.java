@@ -1,4 +1,4 @@
-package cs321.btree;
+package cs321.create;
 
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
@@ -9,8 +9,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.String;
 
-import cs321.create.GeneBankCreateBTreeArguments;
-import cs321.create.SequenceUtils;
+import cs321.btree.BTree;
+import cs321.btree.TreeObject;
+import cs321.common.SequenceUtils;
 
 
 /**
@@ -103,7 +104,7 @@ public class BTreeToFile {
 	
 	/**
 	 * Writes a B Tree to a File in specific format
-	 * @param outFilename
+	 * @param outFilename the filename to write to
 	 **/
 	public void WriteBTreeToFile(String outFilename)
 	{
@@ -111,7 +112,6 @@ public class BTreeToFile {
 	        FileWriter bTreeFile = new FileWriter(outFilename);
 	        CreateBTree(geneBankArgs);
 
-			TreeObject<Long> currNode = bLong.getRoot();
 			bTreeFile.write(bLong.getDegree() + "");
 			bTreeFile.write("\n");
 			bTreeFile.write(BTreeOutputFormat(bLong.getRoot()));
@@ -123,15 +123,16 @@ public class BTreeToFile {
 	      }
 	}
 
+	/**
+	 * Writes a B Tree to a File in dump format
+	 * @param outFilename the filename to write to
+	 **/
 	public void WriteBTreeDumpToFile(String outFilename)
 	{
 	    try {
 	        FileWriter bTreeDumpFile = new FileWriter(outFilename);
 	        CreateBTree(geneBankArgs);
 
-			TreeObject<Long> currNode = bLong.getRoot();
-			//bTreeDumpFile.write(bLong.getDegree() + "");
-			//bTreeDumpFile.write("\n");
 			bTreeDumpFile.write(BTreeDumpFormat(bLong.getRoot()));
 	        bTreeDumpFile.close();
 
@@ -154,7 +155,6 @@ public class BTreeToFile {
 		if (t!=null && !t.isEmpty())
 		{
 			int linenum = 2;
-			int ref = 0;
 			TreeObject<Long> parentRef = new TreeObject<Long>();
 			ArrayList<TreeObject<Long>> tQueue = new ArrayList<TreeObject<Long>>();
 			if (t.getParent()==null)
@@ -190,6 +190,11 @@ public class BTreeToFile {
 		return s;
 	}
 
+	/**
+	 * Returns a BTree object, formatted as a list of genetic sequences with their frequencies
+	 * @param t the btree containing gene sequences formatted as long ints
+	 * @return str a string listing each key and frequency in the object
+	 */
 	public String BTreeDumpFormat (TreeObject<Long> t) {
 		String str = "";
 		String token = "";

@@ -1,11 +1,6 @@
 package cs321.create;
 
-import cs321.btree.BTree;
-import cs321.btree.BTreeToFile;
 import cs321.common.ParseArgumentException;
-
-import java.io.*;
-import java.util.List;
 
 public class GeneBankCreateBTree
 {

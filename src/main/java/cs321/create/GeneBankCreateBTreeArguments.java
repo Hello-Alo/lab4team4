@@ -24,6 +24,12 @@ public class GeneBankCreateBTreeArguments
         this.debugLevel = debugLevel;
     }
 
+    /**
+     * Validates the given arguments
+     * @param args
+     * @return
+     * @throws ParseArgumentException
+     */
     public static GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException{
         boolean useCache;
         int degree;
@@ -104,26 +110,44 @@ public class GeneBankCreateBTreeArguments
         return new GeneBankCreateBTreeArguments(useCache, degree, gbkFileName, subsequenceLength, cacheSize, debugLevel);
     }
 
+    /**
+     * @return useCache
+     */
     public boolean useCache(){
         return this.useCache;
     }
 
+    /**
+     * @return degree
+     */
     public int degree(){
         return this.degree;
     }
 
+    /**
+     * @return gbkFileName
+     */
     public String gbkFileName(){
         return this.gbkFileName;
     }
 
+    /**
+     * @return subsequenceLength
+     */
     public int subsequenceLength(){
         return this.subsequenceLength;
     }
 
+    /**
+     * @return cacheSize
+     */
     public int cacheSize(){
         return this.cacheSize;
     }
 
+    /**
+     * @return debugLevel
+     */
     public int debugLevel() {
         return this.debugLevel;
     }
